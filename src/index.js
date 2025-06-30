@@ -23,34 +23,51 @@ function _getApi() {
           return res.json();
         case 6:
           data = _context.sent;
-          arr = data.products;
+          console.log(data);
+          arr = data.products.filter(function (e) {
+            return e.title !== 'Beef Steak' && e.title !== "Cucumber";
+          });
           arr.forEach(function (element) {
-            var heading = document.createElement('h6');
+            var heading = document.createElement('h5');
             var image = document.createElement('img');
             var card = document.createElement('div');
-            image.style.width = '200px';
-            image.style.height = '100px';
-            card.style.height = '150px';
+            var price = document.createElement('p');
+            var buyBtn = document.createElement("button");
+            buyBtn.innerText = "BUY";
+            buyBtn.style.width = "310px";
+            buyBtn.style.height = "25px";
+            buyBtn.style.alignSelf = 'center';
+            buyBtn.style.borderRadius = "7px";
+            image.style.width = '290px';
+            image.style.height = '220px';
+            price.innerHTML = 'Price : ' + element.price + "$";
+            card.style.height = '400px';
             card.style.borderRadius = '10px';
             card.style.backgroundColor = 'white';
+            image.style.padding = "15px";
             image.src = element.images[0];
             heading.innerHTML = element.title;
+            //   price.style.float = "right";
+            price.style.paddingBottom = '5px';
+            price.style.paddingRight = '5px';
             card.appendChild(image);
             card.appendChild(heading);
+            card.appendChild(price);
+            card.appendChild(buyBtn);
             show.appendChild(card);
             console.log(element);
           });
-          _context.next = 14;
+          _context.next = 15;
           break;
-        case 11:
-          _context.prev = 11;
+        case 12:
+          _context.prev = 12;
           _context.t0 = _context["catch"](0);
           console.log(_context.t0);
-        case 14:
+        case 15:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 11]]);
+    }, _callee, null, [[0, 12]]);
   }));
   return _getApi.apply(this, arguments);
 }
