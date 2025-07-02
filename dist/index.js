@@ -8,48 +8,91 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+// Get the container where product cards will be displayed
 let show = document.querySelector('.show');
+let icons = document.querySelector('.icons');
+let cartShop = document.querySelector('.fa-cart-shopping');
+let cartBadge = document.querySelector('.cart-with-badge');
+let beforeCart = window.getComputedStyle(cartShop, '::after');
+const badge = document.createElement('div');
+let g = beforeCart.content;
+let count = 0;
+console.log(beforeCart.content);
+// Async function to fetch and display products
 function getApi() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            // Fetch product data from DummyJSON API
             const res = yield fetch("https://dummyjson.com/products");
             const data = yield res.json();
+            // Log full data to the console
             console.log(data);
-            let arr = data.products.filter((e) => e.title !== 'Beef Steak' && e.title !== "Cucumber");
+            // Filter out specific products by title
+            let arr = data.products.filter((e) => e.title !== 'Beef Steak' && e.title !== 'Cucumber');
+            // Iterate over the filtered products
             arr.forEach((element) => {
+                // Create individual elements for each product
                 let heading = document.createElement('h5');
                 let image = document.createElement('img');
                 let card = document.createElement('div');
                 let price = document.createElement('p');
-                let buyBtn = document.createElement("button");
+                let buyBtn = document.createElement('button');
+                // Set content for elements
+                heading.innerHTML = element.title;
+                image.src = element.images[0];
+                price.innerHTML = `Price: ${element.price}$`;
                 buyBtn.innerText = "BUY";
-                buyBtn.style.width = "310px";
-                buyBtn.style.height = "25px";
-                buyBtn.style.alignSelf = 'center';
-                buyBtn.style.borderRadius = "7px";
+                // Style the image
                 image.style.width = '290px';
                 image.style.height = '220px';
-                price.innerHTML = 'Price : ' + element.price + "$";
+                image.style.padding = '15px';
+                // Style the price
+                price.style.paddingBottom = '5px';
+                price.style.paddingRight = '5px';
+                // Style the Buy button
+                buyBtn.style.width = '310px';
+                buyBtn.style.height = '25px';
+                buyBtn.style.backgroundColor = '#007BFF';
+                buyBtn.style.color = 'white';
+                buyBtn.style.borderRadius = '7px';
+                buyBtn.style.float = 'center';
+                // Style the card
                 card.style.height = '400px';
                 card.style.borderRadius = '10px';
                 card.style.backgroundColor = 'white';
-                image.style.padding = "15px";
-                image.src = element.images[0];
-                heading.innerHTML = element.title;
-                //   price.style.float = "right";
-                price.style.paddingBottom = '5px';
-                price.style.paddingRight = '5px';
+                card.style.display = 'flex';
+                card.style.flexDirection = 'column';
+                card.style.alignItems = 'center';
+                card.style.justifyContent = 'space-between';
+                card.style.margin = '10px';
+                card.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+                card.style.padding = '10px';
+                // Append elements to card
                 card.appendChild(image);
                 card.appendChild(heading);
                 card.appendChild(price);
                 card.appendChild(buyBtn);
+                // Append card to the main container
                 show.appendChild(card);
-                console.log(element);
+                //Add To Cart
+                badge.classList.add('badge');
+                cartBadge.appendChild(badge);
+                buyBtn.addEventListener('click', () => {
+                    badge.classList.add('badge');
+                    count++;
+                    console.log(count);
+                    badge.innerHTML = count.toString();
+                    cartBadge.style.transform = 'translateY(10%)';
+                });
             });
+            if (count === 0) {
+                badge.classList.remove('badge');
+            }
         }
         catch (error) {
-            console.log(error);
+            console.error("Error fetching products:", error);
         }
     });
 }
+// Call the function to start loading data
 getApi();

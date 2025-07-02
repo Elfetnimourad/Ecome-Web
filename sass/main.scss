@@ -43,8 +43,19 @@ height: 50px;
 
 }
 .fa-cart-shopping{
-transform: translateY(20%);}
+transform: translateY(20%);
 
+}
+.badge{
+   
+    height: 24px;
+    width: 24px;
+    background-color: red;
+    border-radius: 50%;
+    transform: translate(-26%, -192%);
+    color: white;
+    font-size: 17px;
+}
 .avatar{
     width: 40px;
     height: 40px;
@@ -53,6 +64,30 @@ transform: translateY(20%);}
 .show{
     display: grid;
     grid-template-columns:23.8% 23.8% 23.8% 23.8%;
-    background-color: #4f46e5;
+background: linear-gradient(to right, #4f46e5, #3b82f6);
     gap:20px 20px;
 }
+button{
+cursor:pointer;
+}
+
+.sidebar {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      width: 30%;
+      height: 178vh;
+      position: fixed;
+      z-index: 99999999999999999 !important;
+      background-color: white;
+      padding: 20px;
+      gap: 15px;
+    }
+
+    .sidebar i {
+      color: white;
+      line-height: 50px;
+    }
+     .d-none{
+        display: none;
+    }
