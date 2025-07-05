@@ -11,8 +11,11 @@ var cartShop = document.querySelector('.fa-cart-shopping');
 var cartBadge = document.querySelector('.cart-with-badge');
 var beforeCart = window.getComputedStyle(cartShop, '::after');
 var badge = document.createElement('div');
-var g = beforeCart.content;
+var arrOfItemsList = document.querySelector(".arr-of-items");
+var sidebar = document.querySelector('.sidebar');
 var count = 0;
+var countedItem = 0;
+var arrOfItems = [];
 console.log(beforeCart.content);
 // Async function to fetch and display products
 function getApi() {
@@ -101,6 +104,33 @@ function _getApi() {
               console.log(count);
               badge.innerHTML = count.toString();
               cartBadge.style.transform = 'translateY(10%)';
+              arrOfItems.push(element);
+              console.log(element);
+              arrOfItemsList.innerHTML = "";
+              arrOfItems.forEach(function (ele, index) {
+                var cardItem = document.createElement('div');
+                var imgItem = document.createElement('img');
+                var titleItem = document.createElement("p");
+                var amount = document.createElement("span");
+                cardItem.style.width = '100%';
+                imgItem.style.height = '80px';
+                imgItem.style.width = '80px';
+                imgItem.src = ele.images[0];
+                titleItem.innerHTML = ele.title;
+                console.log('ele', ele);
+                if (arrOfItems.indexOf(ele) !== arrOfItems.lastIndexOf(ele)) {
+                  countedItem++;
+                  amount.innerHTML = "Price :" + countedItem.toString();
+                  console.log('true, it is the same');
+                } else {
+                  amount.innerHTML = '1';
+                }
+                cardItem.appendChild(imgItem);
+                cardItem.appendChild(titleItem);
+                cardItem.appendChild(amount);
+                arrOfItemsList.appendChild(cardItem);
+              });
+              arrOfItemsList.style.overflow = "scroll";
             });
           });
           if (count === 0) {

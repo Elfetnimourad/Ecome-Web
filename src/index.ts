@@ -11,9 +11,24 @@ let beforeCart = window.getComputedStyle(cartShop,'::after') as CSSStyleDeclarat
 
 const badge = document.createElement('div');
 
-let g = beforeCart.content;
+let arrOfItemsList = document.querySelector(".arr-of-items") as HTMLDivElement;
+
+let sidebar = document.querySelector('.sidebar') as HTMLDivElement;
 
 let count:number = 0;
+        let countedItem = 0;
+
+
+interface ArrOfItems {
+  title:string,
+  price:number,
+  
+    images:string[]
+  
+
+}
+
+let arrOfItems:ArrOfItems[] = [];
 console.log(beforeCart.content);
 // Async function to fetch and display products
 async function getApi() {
@@ -87,13 +102,51 @@ async function getApi() {
       badge.classList.add('badge');
 cartBadge.appendChild(badge)
      buyBtn.addEventListener('click',()=>{
-            badge.classList.add('badge')
-
+    badge.classList.add('badge');
       count++;
       console.log(count)
       badge.innerHTML = count.toString();
-      cartBadge.style.transform = 'translateY(10%)'
+      cartBadge.style.transform = 'translateY(10%)';
+      arrOfItems.push(element);
+      console.log(element);
+arrOfItemsList.innerHTML = "";
+       arrOfItems.forEach((ele,index)=>{
+      let cardItem = document.createElement('div') as HTMLDivElement;
+      let imgItem = document.createElement('img') as HTMLImageElement;
+      let titleItem = document.createElement("p") as HTMLParagraphElement;
+      let amount = document.createElement("span") as HTMLSpanElement;
+
+      cardItem.style.width = '100%';
+
+      imgItem.style.height = '80px';
+            imgItem.style.width = '80px';
+
+
+      imgItem.src = ele.images[0];
+      titleItem.innerHTML = ele.title;
+console.log('ele',ele)
+      if(arrOfItems.indexOf(ele) !== arrOfItems.lastIndexOf(ele)){
+        countedItem++;
+              amount.innerHTML = "Price :" + countedItem.toString();
+              console.log('true, it is the same');
+              
+      }else{
+              amount.innerHTML = '1';
+                            
+
+      }
+
+
+      cardItem.appendChild(imgItem);
+      cardItem.appendChild(titleItem);
+            cardItem.appendChild(amount);
+
+arrOfItemsList.appendChild(cardItem);
      })
+     arrOfItemsList.style.overflow = "scroll";
+
+     })
+    
     });
     if(count === 0 ){
       badge.classList.remove('badge')
