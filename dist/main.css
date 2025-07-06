@@ -79,7 +79,7 @@ button {
   flex-direction: column;
   justify-content: flex-start;
   width: 30%;
-  height: 178vh;
+  height: 92vh;
   position: fixed;
   z-index: 100000000000000000 !important;
   background-color: white;

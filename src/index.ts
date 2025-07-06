@@ -3,11 +3,13 @@ let show = document.querySelector('.show') as HTMLDivElement;
 
 let icons = document.querySelector('.icons') as HTMLDivElement
 
-let cartShop = document.querySelector('.fa-cart-shopping') as HTMLElement;
+let cartShop = document.querySelector('.fa-cart-shopping') as HTMLDivElement;
 
 let cartBadge = document.querySelector('.cart-with-badge') as HTMLDivElement;
 
 let beforeCart = window.getComputedStyle(cartShop,'::after') as CSSStyleDeclaration;
+
+let closeIcon = document.querySelector(".fa-xmark") as HTMLCanvasElement;
 
 const badge = document.createElement('div');
 
@@ -17,19 +19,28 @@ let sidebar = document.querySelector('.sidebar') as HTMLDivElement;
 
 let count:number = 0;
         let countedItem = 0;
+                let quantity = {quantity:0};
 
 
 interface ArrOfItems {
   title:string,
   price:number,
-  
+  quantity : number,
     images:string[]
   
 
 }
 
 let arrOfItems:ArrOfItems[] = [];
-console.log(beforeCart.content);
+
+
+cartShop?.addEventListener('click',()=>{
+  sidebar.classList.remove('d-none')
+})
+closeIcon?.addEventListener('click',()=>{
+  sidebar.classList.add('d-none')
+})
+
 // Async function to fetch and display products
 async function getApi() {
   try {
@@ -100,21 +111,30 @@ async function getApi() {
 
       //Add To Cart
       badge.classList.add('badge');
-cartBadge.appendChild(badge)
+     cartBadge.appendChild(badge)
+
      buyBtn.addEventListener('click',()=>{
+ element = Object.assign( element,quantity.quantity++);
+
     badge.classList.add('badge');
       count++;
-      console.log(count)
+      console.log(count);
       badge.innerHTML = count.toString();
       cartBadge.style.transform = 'translateY(10%)';
+
       arrOfItems.push(element);
-      console.log(element);
-arrOfItemsList.innerHTML = "";
-       arrOfItems.forEach((ele,index)=>{
+      console.log("arrOfItems",arrOfItems)
+
+      arrOfItemsList.innerHTML = "";
+    let arrOfSetItems = new Set([...arrOfItems]);
+       arrOfSetItems.forEach((ele,index)=>{
       let cardItem = document.createElement('div') as HTMLDivElement;
       let imgItem = document.createElement('img') as HTMLImageElement;
       let titleItem = document.createElement("p") as HTMLParagraphElement;
       let amount = document.createElement("span") as HTMLSpanElement;
+      let totPrice = document.createElement("span") as HTMLSpanElement;
+
+      // let totalPrice = arrOfItems.reduce((e,c)=>e.price + c.price);
 
       cardItem.style.width = '100%';
 
@@ -125,18 +145,12 @@ arrOfItemsList.innerHTML = "";
       imgItem.src = ele.images[0];
       titleItem.innerHTML = ele.title;
 console.log('ele',ele)
-      if(arrOfItems.indexOf(ele) !== arrOfItems.lastIndexOf(ele)){
-        countedItem++;
-              amount.innerHTML = "Price :" + countedItem.toString();
+        //  ele.quantity = countedItem++;
+              amount.innerHTML = "Amount :" + ele.quantity ;
               console.log('true, it is the same');
               
-      }else{
-              amount.innerHTML = '1';
-                            
 
-      }
-
-
+// totPrice.innerHTML = totalPrice.toString();
       cardItem.appendChild(imgItem);
       cardItem.appendChild(titleItem);
             cardItem.appendChild(amount);

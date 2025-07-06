@@ -10,13 +10,23 @@ var icons = document.querySelector('.icons');
 var cartShop = document.querySelector('.fa-cart-shopping');
 var cartBadge = document.querySelector('.cart-with-badge');
 var beforeCart = window.getComputedStyle(cartShop, '::after');
+var closeIcon = document.querySelector(".fa-xmark");
 var badge = document.createElement('div');
 var arrOfItemsList = document.querySelector(".arr-of-items");
 var sidebar = document.querySelector('.sidebar');
 var count = 0;
 var countedItem = 0;
+var quantity = {
+  quantity: 0
+};
 var arrOfItems = [];
-console.log(beforeCart.content);
+cartShop === null || cartShop === void 0 || cartShop.addEventListener('click', function () {
+  sidebar.classList.remove('d-none');
+});
+closeIcon === null || closeIcon === void 0 || closeIcon.addEventListener('click', function () {
+  sidebar.classList.add('d-none');
+});
+
 // Async function to fetch and display products
 function getApi() {
   return _getApi.apply(this, arguments);
@@ -99,32 +109,36 @@ function _getApi() {
             badge.classList.add('badge');
             cartBadge.appendChild(badge);
             buyBtn.addEventListener('click', function () {
+              element = Object.assign(element, quantity.quantity++);
               badge.classList.add('badge');
               count++;
               console.log(count);
               badge.innerHTML = count.toString();
               cartBadge.style.transform = 'translateY(10%)';
               arrOfItems.push(element);
-              console.log(element);
+              console.log("arrOfItems", arrOfItems);
               arrOfItemsList.innerHTML = "";
-              arrOfItems.forEach(function (ele, index) {
+              var arrOfSetItems = new Set([].concat(arrOfItems));
+              arrOfSetItems.forEach(function (ele, index) {
                 var cardItem = document.createElement('div');
                 var imgItem = document.createElement('img');
                 var titleItem = document.createElement("p");
                 var amount = document.createElement("span");
+                var totPrice = document.createElement("span");
+
+                // let totalPrice = arrOfItems.reduce((e,c)=>e.price + c.price);
+
                 cardItem.style.width = '100%';
                 imgItem.style.height = '80px';
                 imgItem.style.width = '80px';
                 imgItem.src = ele.images[0];
                 titleItem.innerHTML = ele.title;
                 console.log('ele', ele);
-                if (arrOfItems.indexOf(ele) !== arrOfItems.lastIndexOf(ele)) {
-                  countedItem++;
-                  amount.innerHTML = "Price :" + countedItem.toString();
-                  console.log('true, it is the same');
-                } else {
-                  amount.innerHTML = '1';
-                }
+                //  ele.quantity = countedItem++;
+                amount.innerHTML = "Amount :" + ele.quantity;
+                console.log('true, it is the same');
+
+                // totPrice.innerHTML = totalPrice.toString();
                 cardItem.appendChild(imgItem);
                 cardItem.appendChild(titleItem);
                 cardItem.appendChild(amount);
