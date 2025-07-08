@@ -18,11 +18,11 @@ let arrOfItemsList = document.querySelector(".arr-of-items") as HTMLDivElement;
 let sidebar = document.querySelector('.sidebar') as HTMLDivElement;
 
 let count:number = 0;
-        let countedItem = 0;
+        let countedItem = 1;
                 let quantity = {quantity:0};
 
-
 interface ArrOfItems {
+  id:number,
   title:string,
   price:number,
   quantity : number,
@@ -31,8 +31,10 @@ interface ArrOfItems {
 
 }
 
-let arrOfItems:ArrOfItems[] = [];
+let arrOfItems: ArrOfItems[] = [];
+        let tryArr = new Set();
 
+let ab: ArrOfItems[] = [];
 
 cartShop?.addEventListener('click',()=>{
   sidebar.classList.remove('d-none')
@@ -55,9 +57,9 @@ async function getApi() {
     let arr = data.products.filter((e: { title: string }) =>
       e.title !== 'Beef Steak' && e.title !== 'Cucumber'
     );
-
+const copiedArray = [...arr];
     // Iterate over the filtered products
-    arr.forEach((element: any) => {
+    copiedArray.forEach((element: any) => {
       // Create individual elements for each product
       let heading = document.createElement('h5');
       let image = document.createElement('img');
@@ -112,28 +114,52 @@ async function getApi() {
       //Add To Cart
       badge.classList.add('badge');
      cartBadge.appendChild(badge)
+ let objItem = {...element,quantity};
 
      buyBtn.addEventListener('click',()=>{
- element = Object.assign( element,quantity.quantity++);
+          console.log('let us see before',arrOfItems)
+console.log(quantity.quantity++,'rr')
 
     badge.classList.add('badge');
-      count++;
+              count++;
+
       console.log(count);
       badge.innerHTML = count.toString();
       cartBadge.style.transform = 'translateY(10%)';
-
-      arrOfItems.push(element);
-      console.log("arrOfItems",arrOfItems)
+objItem.quantity++
+      arrOfItems.push(objItem);
 
       arrOfItemsList.innerHTML = "";
+    let arrOfSetItemsFilter = arrOfItems.filter((e,i)=>i === arrOfItems.indexOf(e));
+console.log('filtred array',arrOfSetItemsFilter)
     let arrOfSetItems = new Set([...arrOfItems]);
+
        arrOfSetItems.forEach((ele,index)=>{
+
       let cardItem = document.createElement('div') as HTMLDivElement;
       let imgItem = document.createElement('img') as HTMLImageElement;
       let titleItem = document.createElement("p") as HTMLParagraphElement;
       let amount = document.createElement("span") as HTMLSpanElement;
-      let totPrice = document.createElement("span") as HTMLSpanElement;
+            let amountNum = document.createElement("span") as HTMLSpanElement;
 
+      let totPrice = document.createElement("span") as HTMLSpanElement;
+      let decBtn = document.createElement("button") as HTMLButtonElement;
+      let incBtn = document.createElement("button") as HTMLButtonElement;
+
+      incBtn.innerHTML = '+';
+      decBtn.innerHTML = '-';
+
+      incBtn.addEventListener('click',(e)=>{
+      ele.quantity++;
+      
+      console.log("increment",e)
+    })
+
+    decBtn.addEventListener('click',(e)=>{
+      ele.quantity--;
+            console.log("decrement",e)
+
+    })
       // let totalPrice = arrOfItems.reduce((e,c)=>e.price + c.price);
 
       cardItem.style.width = '100%';
@@ -144,13 +170,30 @@ async function getApi() {
 
       imgItem.src = ele.images[0];
       titleItem.innerHTML = ele.title;
-console.log('ele',ele)
-        //  ele.quantity = countedItem++;
-              amount.innerHTML = "Amount :" + ele.quantity ;
+console.log('ele',ele);
+
+
+
+if(!tryArr.has(ele)){
+
+  ele.quantity = 1;
+    tryArr.add(ele);
+   
+
+
+}
+
+
+amount.innerText = "Amount :";
+    amount.appendChild(incBtn);
+    
+amountNum.innerHTML = ele.quantity.toString();
+amount.appendChild(amountNum);     
               console.log('true, it is the same');
-              
+        
 
 // totPrice.innerHTML = totalPrice.toString();
+amount.appendChild(decBtn);
       cardItem.appendChild(imgItem);
       cardItem.appendChild(titleItem);
             cardItem.appendChild(amount);
@@ -173,3 +216,6 @@ arrOfItemsList.appendChild(cardItem);
 
 // Call the function to start loading data
 getApi();
+function specifiedInc(item){
+return item.quantity++;
+}

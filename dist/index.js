@@ -19,9 +19,11 @@ const badge = document.createElement('div');
 let arrOfItemsList = document.querySelector(".arr-of-items");
 let sidebar = document.querySelector('.sidebar');
 let count = 0;
-let countedItem = 0;
+let countedItem = 1;
 let quantity = { quantity: 0 };
 let arrOfItems = [];
+let tryArr = new Set();
+let ab = [];
 cartShop === null || cartShop === void 0 ? void 0 : cartShop.addEventListener('click', () => {
     sidebar.classList.remove('d-none');
 });
@@ -39,8 +41,9 @@ function getApi() {
             console.log(data);
             // Filter out specific products by title
             let arr = data.products.filter((e) => e.title !== 'Beef Steak' && e.title !== 'Cucumber');
+            const copiedArray = [...arr];
             // Iterate over the filtered products
-            arr.forEach((element) => {
+            copiedArray.forEach((element) => {
                 // Create individual elements for each product
                 let heading = document.createElement('h5');
                 let image = document.createElement('img');
@@ -87,23 +90,40 @@ function getApi() {
                 //Add To Cart
                 badge.classList.add('badge');
                 cartBadge.appendChild(badge);
+                let objItem = Object.assign(Object.assign({}, element), { quantity });
                 buyBtn.addEventListener('click', () => {
-                    element = Object.assign(element, quantity.quantity++);
+                    console.log('let us see before', arrOfItems);
+                    console.log(quantity.quantity++, 'rr');
                     badge.classList.add('badge');
                     count++;
                     console.log(count);
                     badge.innerHTML = count.toString();
                     cartBadge.style.transform = 'translateY(10%)';
-                    arrOfItems.push(element);
-                    console.log("arrOfItems", arrOfItems);
+                    objItem.quantity++;
+                    arrOfItems.push(objItem);
                     arrOfItemsList.innerHTML = "";
+                    let arrOfSetItemsFilter = arrOfItems.filter((e, i) => i === arrOfItems.indexOf(e));
+                    console.log('filtred array', arrOfSetItemsFilter);
                     let arrOfSetItems = new Set([...arrOfItems]);
                     arrOfSetItems.forEach((ele, index) => {
                         let cardItem = document.createElement('div');
                         let imgItem = document.createElement('img');
                         let titleItem = document.createElement("p");
                         let amount = document.createElement("span");
+                        let amountNum = document.createElement("span");
                         let totPrice = document.createElement("span");
+                        let decBtn = document.createElement("button");
+                        let incBtn = document.createElement("button");
+                        incBtn.innerHTML = '+';
+                        decBtn.innerHTML = '-';
+                        incBtn.addEventListener('click', (e) => {
+                            ele.quantity++;
+                            console.log("increment", e);
+                        });
+                        decBtn.addEventListener('click', (e) => {
+                            ele.quantity--;
+                            console.log("decrement", e);
+                        });
                         // let totalPrice = arrOfItems.reduce((e,c)=>e.price + c.price);
                         cardItem.style.width = '100%';
                         imgItem.style.height = '80px';
@@ -111,10 +131,17 @@ function getApi() {
                         imgItem.src = ele.images[0];
                         titleItem.innerHTML = ele.title;
                         console.log('ele', ele);
-                        //  ele.quantity = countedItem++;
-                        amount.innerHTML = "Amount :" + ele.quantity;
+                        if (!tryArr.has(ele)) {
+                            ele.quantity = 1;
+                            tryArr.add(ele);
+                        }
+                        amount.innerText = "Amount :";
+                        amount.appendChild(incBtn);
+                        amountNum.innerHTML = ele.quantity.toString();
+                        amount.appendChild(amountNum);
                         console.log('true, it is the same');
                         // totPrice.innerHTML = totalPrice.toString();
+                        amount.appendChild(decBtn);
                         cardItem.appendChild(imgItem);
                         cardItem.appendChild(titleItem);
                         cardItem.appendChild(amount);
@@ -134,3 +161,6 @@ function getApi() {
 }
 // Call the function to start loading data
 getApi();
+function specifiedInc(item) {
+    return item.quantity++;
+}
