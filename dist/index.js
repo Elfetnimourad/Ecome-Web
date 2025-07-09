@@ -110,20 +110,23 @@ function getApi() {
                         let imgItem = document.createElement('img');
                         let titleItem = document.createElement("p");
                         let amount = document.createElement("span");
-                        let amountNum = document.createElement("span");
                         let totPrice = document.createElement("span");
                         let decBtn = document.createElement("button");
                         let incBtn = document.createElement("button");
+                        incBtn.addEventListener("click", () => {
+                            ele.quantity++;
+                            amount.innerHTML = "Amount :" + ele.quantity;
+                            amount.appendChild(incBtn);
+                            amount.appendChild(decBtn);
+                        });
+                        decBtn.addEventListener("click", () => {
+                            ele.quantity--;
+                            amount.innerHTML = "Amount :" + ele.quantity;
+                            amount.appendChild(incBtn);
+                            amount.appendChild(decBtn);
+                        });
                         incBtn.innerHTML = '+';
                         decBtn.innerHTML = '-';
-                        incBtn.addEventListener('click', (e) => {
-                            ele.quantity++;
-                            console.log("increment", e);
-                        });
-                        decBtn.addEventListener('click', (e) => {
-                            ele.quantity--;
-                            console.log("decrement", e);
-                        });
                         // let totalPrice = arrOfItems.reduce((e,c)=>e.price + c.price);
                         cardItem.style.width = '100%';
                         imgItem.style.height = '80px';
@@ -135,12 +138,10 @@ function getApi() {
                             ele.quantity = 1;
                             tryArr.add(ele);
                         }
-                        amount.innerText = "Amount :";
-                        amount.appendChild(incBtn);
-                        amountNum.innerHTML = ele.quantity.toString();
-                        amount.appendChild(amountNum);
+                        amount.innerHTML = "Amount :" + ele.quantity;
                         console.log('true, it is the same');
                         // totPrice.innerHTML = totalPrice.toString();
+                        amount.appendChild(incBtn);
                         amount.appendChild(decBtn);
                         cardItem.appendChild(imgItem);
                         cardItem.appendChild(titleItem);

@@ -133,33 +133,36 @@ objItem.quantity++
     let arrOfSetItemsFilter = arrOfItems.filter((e,i)=>i === arrOfItems.indexOf(e));
 console.log('filtred array',arrOfSetItemsFilter)
     let arrOfSetItems = new Set([...arrOfItems]);
-
+ 
        arrOfSetItems.forEach((ele,index)=>{
 
       let cardItem = document.createElement('div') as HTMLDivElement;
       let imgItem = document.createElement('img') as HTMLImageElement;
       let titleItem = document.createElement("p") as HTMLParagraphElement;
       let amount = document.createElement("span") as HTMLSpanElement;
-            let amountNum = document.createElement("span") as HTMLSpanElement;
-
       let totPrice = document.createElement("span") as HTMLSpanElement;
-      let decBtn = document.createElement("button") as HTMLButtonElement;
+         let decBtn = document.createElement("button") as HTMLButtonElement;
       let incBtn = document.createElement("button") as HTMLButtonElement;
 
+incBtn.addEventListener("click", ()=>{
+  ele.quantity++;
+  amount.innerHTML = "Amount :" + ele.quantity ;
+
+amount.appendChild(incBtn);
+amount.appendChild(decBtn);
+})
+decBtn.addEventListener("click",()=>{
+  ele.quantity--;
+  amount.innerHTML = "Amount :" + ele.quantity ;
+  
+amount.appendChild(incBtn);
+amount.appendChild(decBtn);
+
+})
       incBtn.innerHTML = '+';
       decBtn.innerHTML = '-';
 
-      incBtn.addEventListener('click',(e)=>{
-      ele.quantity++;
-      
-      console.log("increment",e)
-    })
 
-    decBtn.addEventListener('click',(e)=>{
-      ele.quantity--;
-            console.log("decrement",e)
-
-    })
       // let totalPrice = arrOfItems.reduce((e,c)=>e.price + c.price);
 
       cardItem.style.width = '100%';
@@ -182,23 +185,23 @@ if(!tryArr.has(ele)){
 
 
 }
-
-
-amount.innerText = "Amount :";
-    amount.appendChild(incBtn);
-    
-amountNum.innerHTML = ele.quantity.toString();
-amount.appendChild(amountNum);     
+amount.innerHTML = "Amount :" + ele.quantity ;
+         
               console.log('true, it is the same');
-        
+              
 
 // totPrice.innerHTML = totalPrice.toString();
+
+
+
+amount.appendChild(incBtn);
 amount.appendChild(decBtn);
       cardItem.appendChild(imgItem);
       cardItem.appendChild(titleItem);
             cardItem.appendChild(amount);
 
 arrOfItemsList.appendChild(cardItem);
+
      })
      arrOfItemsList.style.overflow = "scroll";
 

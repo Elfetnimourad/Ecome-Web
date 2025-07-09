@@ -146,20 +146,24 @@ function _getApi() {
                 var imgItem = document.createElement('img');
                 var titleItem = document.createElement("p");
                 var amount = document.createElement("span");
-                var amountNum = document.createElement("span");
                 var totPrice = document.createElement("span");
                 var decBtn = document.createElement("button");
                 var incBtn = document.createElement("button");
+                incBtn.addEventListener("click", function () {
+                  ele.quantity++;
+                  amount.innerHTML = "Amount :" + ele.quantity;
+                  amount.appendChild(incBtn);
+                  amount.appendChild(decBtn);
+                });
+                decBtn.addEventListener("click", function () {
+                  ele.quantity--;
+                  amount.innerHTML = "Amount :" + ele.quantity;
+                  amount.appendChild(incBtn);
+                  amount.appendChild(decBtn);
+                });
                 incBtn.innerHTML = '+';
                 decBtn.innerHTML = '-';
-                incBtn.addEventListener('click', function (e) {
-                  ele.quantity++;
-                  console.log("increment", e);
-                });
-                decBtn.addEventListener('click', function (e) {
-                  ele.quantity--;
-                  console.log("decrement", e);
-                });
+
                 // let totalPrice = arrOfItems.reduce((e,c)=>e.price + c.price);
 
                 cardItem.style.width = '100%';
@@ -172,13 +176,12 @@ function _getApi() {
                   ele.quantity = 1;
                   tryArr.add(ele);
                 }
-                amount.innerText = "Amount :";
-                amount.appendChild(incBtn);
-                amountNum.innerHTML = ele.quantity.toString();
-                amount.appendChild(amountNum);
+                amount.innerHTML = "Amount :" + ele.quantity;
                 console.log('true, it is the same');
 
                 // totPrice.innerHTML = totalPrice.toString();
+
+                amount.appendChild(incBtn);
                 amount.appendChild(decBtn);
                 cardItem.appendChild(imgItem);
                 cardItem.appendChild(titleItem);
