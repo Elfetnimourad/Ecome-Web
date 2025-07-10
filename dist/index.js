@@ -18,9 +18,12 @@ let closeIcon = document.querySelector(".fa-xmark");
 const badge = document.createElement('div');
 let arrOfItemsList = document.querySelector(".arr-of-items");
 let sidebar = document.querySelector('.sidebar');
+let totPrice = document.createElement("span");
+totPrice.classList.add("totPrice");
 let count = 0;
 let countedItem = 1;
 let quantity = { quantity: 0 };
+let t = 0;
 let arrOfItems = [];
 let tryArr = new Set();
 let ab = [];
@@ -90,7 +93,8 @@ function getApi() {
                 //Add To Cart
                 badge.classList.add('badge');
                 cartBadge.appendChild(badge);
-                let objItem = Object.assign(Object.assign({}, element), { quantity });
+                let toot;
+                let objItem = Object.assign(Object.assign({}, element), { quantity, toot });
                 buyBtn.addEventListener('click', () => {
                     console.log('let us see before', arrOfItems);
                     console.log(quantity.quantity++, 'rr');
@@ -100,31 +104,56 @@ function getApi() {
                     badge.innerHTML = count.toString();
                     cartBadge.style.transform = 'translateY(10%)';
                     objItem.quantity++;
+                    objItem.toot = (objItem.quantity * objItem.price) || objItem.price;
                     arrOfItems.push(objItem);
                     arrOfItemsList.innerHTML = "";
                     let arrOfSetItemsFilter = arrOfItems.filter((e, i) => i === arrOfItems.indexOf(e));
                     console.log('filtred array', arrOfSetItemsFilter);
                     let arrOfSetItems = new Set([...arrOfItems]);
+                    let ar = [];
                     arrOfSetItems.forEach((ele, index) => {
                         let cardItem = document.createElement('div');
                         let imgItem = document.createElement('img');
                         let titleItem = document.createElement("p");
                         let amount = document.createElement("span");
-                        let totPrice = document.createElement("span");
                         let decBtn = document.createElement("button");
                         let incBtn = document.createElement("button");
                         incBtn.addEventListener("click", () => {
                             ele.quantity++;
                             amount.innerHTML = "Amount :" + ele.quantity;
+                            ele.toot = ele.quantity * ele.price;
+                            ar.push(totNumber);
+                            count++;
+                            badge.innerHTML = count.toString();
+                            console.log('ar', ar);
                             amount.appendChild(incBtn);
                             amount.appendChild(decBtn);
+                            console.log("ele of increment cart shop", ele);
+                            let sum = [...arrOfSetItems.values()].map((e) => e.toot).reduce((e, c) => e + c);
+                            totPrice.innerHTML = 'Total Price :' + sum.toString() + "$";
                         });
                         decBtn.addEventListener("click", () => {
                             ele.quantity--;
                             amount.innerHTML = "Amount :" + ele.quantity;
+                            ele.toot = ele.quantity * ele.price;
+                            ar.push(totNumber);
+                            console.log('ar', ar);
+                            count--;
+                            badge.innerHTML = count.toString();
                             amount.appendChild(incBtn);
                             amount.appendChild(decBtn);
+                            console.log("ele of decrement cart shop", ele);
+                            let sum = [...arrOfSetItems.values()].map((e) => e.toot).reduce((e, c) => e + c);
+                            totPrice.innerHTML = 'Total Price :' + sum.toString() + "$";
+                            if (ele.quantity === 0) {
+                                cardItem.remove();
+                                arrOfSetItems.delete(ele);
+                            }
                         });
+                        if (ele.quantity === 0) {
+                            cardItem.remove();
+                            arrOfSetItems.delete(ele);
+                        }
                         incBtn.innerHTML = '+';
                         decBtn.innerHTML = '-';
                         // let totalPrice = arrOfItems.reduce((e,c)=>e.price + c.price);
@@ -140,14 +169,22 @@ function getApi() {
                         }
                         amount.innerHTML = "Amount :" + ele.quantity;
                         console.log('true, it is the same');
-                        // totPrice.innerHTML = totalPrice.toString();
+                        let totNumber = ele.quantity * ele.price;
+                        console.log("totNumber", totNumber);
+                        ar.push(totNumber);
+                        console.log(ar, "ar");
                         amount.appendChild(incBtn);
                         amount.appendChild(decBtn);
                         cardItem.appendChild(imgItem);
                         cardItem.appendChild(titleItem);
                         cardItem.appendChild(amount);
                         arrOfItemsList.appendChild(cardItem);
+                        console.log(ele.toot);
                     });
+                    let sum = [...arrOfSetItems.values()].map((e) => e.toot).reduce((e, c) => e + c);
+                    totPrice.innerHTML = 'Total Price :' + sum.toString() + "$";
+                    arrOfItemsList.appendChild(totPrice);
+                    console.log('sum', sum);
                     arrOfItemsList.style.overflow = "scroll";
                 });
             });
@@ -162,6 +199,3 @@ function getApi() {
 }
 // Call the function to start loading data
 getApi();
-function specifiedInc(item) {
-    return item.quantity++;
-}

@@ -86,6 +86,13 @@ button {
   overflow: scroll;
   align-self: start;
 }
+.sidebar .totPrice {
+  background-color: red;
+  color: white;
+}
+.sidebar button {
+  float: right;
+}
 
 .sidebar i {
   color: black;

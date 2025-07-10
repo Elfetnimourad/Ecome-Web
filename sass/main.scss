@@ -82,9 +82,17 @@ width: 30%;
       background-color: white;
      overflow: scroll;
          align-self: start;
+           & .totPrice{
+    background-color: red;
+    color: white;
+}
+& button{
+    float: right;
+}
 
     //    transform: translateY(46%);
     }
+ 
  .sidebar i{
       color: black;
       width:30px !important;

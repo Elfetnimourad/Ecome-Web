@@ -17,22 +17,28 @@ let arrOfItemsList = document.querySelector(".arr-of-items") as HTMLDivElement;
 
 let sidebar = document.querySelector('.sidebar') as HTMLDivElement;
 
+      let totPrice = document.createElement("span") as HTMLSpanElement;
+totPrice.classList.add("totPrice");
+
 let count:number = 0;
         let countedItem = 1;
                 let quantity = {quantity:0};
+                let t = 0;
 
 interface ArrOfItems {
   id:number,
   title:string,
   price:number,
   quantity : number,
-    images:string[]
+    images:string[],
+    toot:number;
   
 
 }
 
 let arrOfItems: ArrOfItems[] = [];
         let tryArr = new Set();
+       
 
 let ab: ArrOfItems[] = [];
 
@@ -113,8 +119,10 @@ const copiedArray = [...arr];
 
       //Add To Cart
       badge.classList.add('badge');
-     cartBadge.appendChild(badge)
- let objItem = {...element,quantity};
+     cartBadge.appendChild(badge);
+     let toot;
+   
+ let objItem = {...element,quantity,toot};
 
      buyBtn.addEventListener('click',()=>{
           console.log('let us see before',arrOfItems)
@@ -126,39 +134,66 @@ console.log(quantity.quantity++,'rr')
       console.log(count);
       badge.innerHTML = count.toString();
       cartBadge.style.transform = 'translateY(10%)';
-objItem.quantity++
+objItem.quantity++;
+  objItem.toot = (objItem.quantity * objItem.price) || objItem.price;
       arrOfItems.push(objItem);
 
       arrOfItemsList.innerHTML = "";
     let arrOfSetItemsFilter = arrOfItems.filter((e,i)=>i === arrOfItems.indexOf(e));
 console.log('filtred array',arrOfSetItemsFilter)
     let arrOfSetItems = new Set([...arrOfItems]);
- 
-       arrOfSetItems.forEach((ele,index)=>{
+ let ar:number[] = [];
 
+
+arrOfSetItems.forEach((ele,index)=>{
       let cardItem = document.createElement('div') as HTMLDivElement;
       let imgItem = document.createElement('img') as HTMLImageElement;
       let titleItem = document.createElement("p") as HTMLParagraphElement;
       let amount = document.createElement("span") as HTMLSpanElement;
-      let totPrice = document.createElement("span") as HTMLSpanElement;
          let decBtn = document.createElement("button") as HTMLButtonElement;
       let incBtn = document.createElement("button") as HTMLButtonElement;
+
 
 incBtn.addEventListener("click", ()=>{
   ele.quantity++;
   amount.innerHTML = "Amount :" + ele.quantity ;
-
+      ele.toot = ele.quantity * ele.price;
+ar.push(totNumber);
+ count++;
+badge.innerHTML = count.toString();
+console.log('ar',ar)
 amount.appendChild(incBtn);
 amount.appendChild(decBtn);
+console.log("ele of increment cart shop",ele)
+let sum = [...arrOfSetItems.values()].map((e)=>e.toot).reduce((e,c)=>e+c);
+totPrice.innerHTML = 'Total Price :' + sum.toString() + "$";
 })
 decBtn.addEventListener("click",()=>{
   ele.quantity--;
   amount.innerHTML = "Amount :" + ele.quantity ;
-  
+
+      ele.toot = ele.quantity * ele.price;
+
+ar.push(totNumber)
+console.log('ar',ar)
+ count--;
+badge.innerHTML = count.toString();
 amount.appendChild(incBtn);
 amount.appendChild(decBtn);
+console.log("ele of decrement cart shop",ele);
+let sum = [...arrOfSetItems.values()].map((e)=>e.toot).reduce((e,c)=>e+c);
+totPrice.innerHTML = 'Total Price :' + sum.toString() + "$";
+if(ele.quantity === 0){
+  cardItem.remove();
+   arrOfSetItems.delete(ele);
 
+}
 })
+if(ele.quantity === 0){
+  cardItem.remove();
+   arrOfSetItems.delete(ele);
+
+}
       incBtn.innerHTML = '+';
       decBtn.innerHTML = '-';
 
@@ -176,33 +211,36 @@ amount.appendChild(decBtn);
 console.log('ele',ele);
 
 
-
 if(!tryArr.has(ele)){
-
   ele.quantity = 1;
     tryArr.add(ele);
-   
-
-
 }
 amount.innerHTML = "Amount :" + ele.quantity ;
-         
+
               console.log('true, it is the same');
-              
+          let totNumber:number = ele.quantity * ele.price;
+console.log("totNumber",totNumber)    
 
-// totPrice.innerHTML = totalPrice.toString();
 
 
+
+ar.push(totNumber);
+console.log(ar,"ar")
 
 amount.appendChild(incBtn);
 amount.appendChild(decBtn);
       cardItem.appendChild(imgItem);
       cardItem.appendChild(titleItem);
             cardItem.appendChild(amount);
-
 arrOfItemsList.appendChild(cardItem);
+console.log(ele.toot)
 
      })
+
+     let sum = [...arrOfSetItems.values()].map((e)=>e.toot).reduce((e,c)=>e+c);
+totPrice.innerHTML = 'Total Price :' + sum.toString() + "$";
+arrOfItemsList.appendChild(totPrice);
+console.log('sum',sum)
      arrOfItemsList.style.overflow = "scroll";
 
      })
@@ -219,6 +257,3 @@ arrOfItemsList.appendChild(cardItem);
 
 // Call the function to start loading data
 getApi();
-function specifiedInc(item){
-return item.quantity++;
-}
