@@ -146,6 +146,7 @@ console.log('filtred array',arrOfSetItemsFilter)
 
 
 arrOfSetItems.forEach((ele,index)=>{
+  if(ele.quantity !== 0){
       let cardItem = document.createElement('div') as HTMLDivElement;
       let imgItem = document.createElement('img') as HTMLImageElement;
       let titleItem = document.createElement("p") as HTMLParagraphElement;
@@ -183,6 +184,10 @@ amount.appendChild(decBtn);
 console.log("ele of decrement cart shop",ele);
 let sum = [...arrOfSetItems.values()].map((e)=>e.toot).reduce((e,c)=>e+c);
 totPrice.innerHTML = 'Total Price :' + sum.toString() + "$";
+if(count === 0 ){
+      badge.classList.remove('badge');
+      totPrice.remove();
+    }
 if(ele.quantity === 0){
   cardItem.remove();
    arrOfSetItems.delete(ele);
@@ -194,6 +199,8 @@ if(ele.quantity === 0){
    arrOfSetItems.delete(ele);
 
 }
+console.log("eleeeeeeee",ele)
+
       incBtn.innerHTML = '+';
       decBtn.innerHTML = '-';
 
@@ -234,7 +241,7 @@ amount.appendChild(decBtn);
             cardItem.appendChild(amount);
 arrOfItemsList.appendChild(cardItem);
 console.log(ele.toot)
-
+}
      })
 
      let sum = [...arrOfSetItems.values()].map((e)=>e.toot).reduce((e,c)=>e+c);

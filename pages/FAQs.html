@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FAQ Accordion</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f9f9f9;
+      padding: 2rem;
+    }
+
+    .faq-container {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .faq-item {
+      background: white;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+    }
+
+    .faq-answer {
+      margin-top: 0.75rem;
+      color: #444;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .faq-item-open-answer {
+      display: block;
+    }
+
+    .faq-item-open-toggle-icon {
+      transform: rotate(45deg);
+    }
+
+    .toggle-icon {
+      transition: transform 0.2s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="faq-container">
+    <h2 style="text-align:center;">Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>How do I place an order?</span>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="faq-answer">
+        Browse products, add to cart, and proceed to checkout. Follow the steps to complete your purchase.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>How long does delivery take?</span>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="faq-answer">
+        Delivery usually takes 3–7 business days depending on your location and selected shipping option.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Can I return an item?</span>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="faq-answer">
+        Yes, we accept returns within 14 days of delivery. Please check our Return Policy for full details.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Do you ship internationally?</span>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="faq-answer">
+        Yes! We offer worldwide shipping with standard and express options.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>How do I track my order?</span>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="faq-answer">
+        Once your order is shipped, you’ll receive a tracking link via email or SMS.
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+   const faqItem = document.querySelectorAll(".faq-item");
+
+faqItem.forEach((el,i)=>{
+
+    if(el === faqItem[i]){
+let togItem =el.children[0].children[1];
+
+  let faqAnswer =el.children[1];
+ 
+ togItem.addEventListener('click',()=>{
+   
+    faqAnswer.classList.toggle('faq-item-open-answer');
+    togItem.classList.toggle('faq-item-open-toggle-icon')
+ })
+    }
+})
+
+  </script>
+
+</body>
+</html>
