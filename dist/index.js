@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 // Get the container where product cards will be displayed
 let show = document.querySelector('.show');
 let icons = document.querySelector('.icons');
+let home = document.querySelector('a');
 let cartShop = document.querySelector('.fa-cart-shopping');
 let cartBadge = document.querySelector('.cart-with-badge');
 let beforeCart = window.getComputedStyle(cartShop, '::after');
@@ -34,6 +35,7 @@ closeIcon === null || closeIcon === void 0 ? void 0 : closeIcon.addEventListener
     sidebar.classList.add('d-none');
 });
 // Async function to fetch and display products
+home.style.color = "black";
 function getApi() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -95,6 +97,49 @@ function getApi() {
                 cartBadge.appendChild(badge);
                 let toot;
                 let objItem = Object.assign(Object.assign({}, element), { quantity, toot });
+                // Full Details for the Each Product 
+                image.addEventListener('click', () => {
+                    show.innerHTML = '';
+                    let partImage = document.createElement("div");
+                    let partDetails = document.createElement("div");
+                    let productCard = document.createElement('div');
+                    let productImage = document.createElement('img');
+                    let productTitle = document.createElement("h4");
+                    let descrptionProduct = document.createElement("p");
+                    let productPrice = document.createElement('span');
+                    let productDimensions = document.createElement("h5");
+                    let productStock = document.createElement("h5");
+                    for (let i = 0.1; i <= element.rating; i++) {
+                        let rateProduct = document.createElement("i");
+                        rateProduct.classList = 'fa-solid fa-star';
+                        rateProduct.style.color = "yellow";
+                        partDetails.appendChild(rateProduct);
+                        productCard.appendChild(partDetails);
+                    }
+                    show.style.height = '80vh';
+                    productImage.src = element.images[0];
+                    productImage.style.border = '1px solid lightblue';
+                    productImage.style.boxShadow = '2px 2px 2px lightblue';
+                    productTitle.innerText = 'Title :' + element.title;
+                    descrptionProduct.innerText = "Product Description :" + element.description;
+                    productPrice.innerText = 'Price :' + element.price + "$";
+                    productDimensions.innerHTML = "Dimensions :" + JSON.stringify((element.dimensions));
+                    productImage.style.height = '50vh';
+                    productStock.innerHTML = "Stock :" + element.stock;
+                    partImage.appendChild(productImage);
+                    partDetails.appendChild(productTitle);
+                    partDetails.appendChild(descrptionProduct);
+                    partDetails.appendChild(productDimensions);
+                    partDetails.appendChild(productPrice);
+                    partDetails.appendChild(productStock);
+                    productCard.style.display = 'flex';
+                    productCard.style.flexDirection = 'row';
+                    productCard.style.width = '150vh';
+                    productCard.style.height = '70vh';
+                    productCard.appendChild(partImage);
+                    productCard.appendChild(partDetails);
+                    show.appendChild(productCard);
+                });
                 buyBtn.addEventListener('click', () => {
                     console.log('let us see before', arrOfItems);
                     console.log(quantity.quantity++, 'rr');

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+    *{
+    color: white;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #3f84c3;
+    
+}
+form{
+    width: 500px;
+    height: 500px;
+    border-radius: 10px;
+background-color: white;
+display: flex;
+justify-content: flex-start;
+align-items: center;
+flex-direction: column;
+background: linear-gradient(to right,#323c83,#414c9b);
+border:none;
+}
+input{
+    width: 80%;
+    height: 40px;
+    border-radius: 4px;
+    outline: none;
+    background-color: inherit;
+color: white;
+border-right-style:none ;
+border-left-style:none ;
+border-top-style:none ;
+
+}
+textarea{
+    width: 80%;
+    height: 100px;
+    outline: none;
+    background-color: inherit;
+color: white;
+}
+.btn-style{
+    background-color: rgb(34, 34, 197);
+    color: white;
+    width: 80px;
+    height: 30px;
+    border-radius: 3px;
+}
+.btn-style:hover{
+    opacity: 0.9;
+    color: green;
+}
+input:hover, textarea:hover{
+    border: 1px solid green;
+}
+</style>
+     <script type="text/javascript"
+     src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+(function(){
+   emailjs.init({
+     publicKey: "yQnIvihvpekb5JbcK",
+   });
+})();
+</script>
+</head>
+<body>
+        <form action="">
+            <h1>Contact Us</h1>
+            <p>Have questions or suggestions? We'd love to hear from you!</p>
+            <label for=""></label>
+            <input type="text" placeholder="username" id="name" required >
+            <br>
+            <label for=""></label>
+            <input type="email" placeholder="email adrress" id="email" required >
+            <br>
+            <label for=""></label>
+            <input type="text" placeholder="subject" id="subject" required >
+            <br>
+            <label for=""></label>
+    <textarea name="your message" placeholder="your message" id="message"></textarea>
+            <br>
+            <button type="button" class="btn-style" onclick="sendEmail()">Submit</button>
+        </form>
+        <script>
+
+//             function sendEmail() {
+//   console.log("hi from sendEmail function");
+
+//   let params = {
+//     name: document.getElementById("name").value,
+//     email: document.getElementById("email").value,
+//     subject: document.getElementById("subject").value,
+
+//     message: document.getElementById("message").value,
+//   };
+//   emailjs
+//     .send("service_dmfdec1", "template_pjlcqzn", params)
+//     .then(alert("Email Sent!"))
+//     .catch((err) => console.log("this is the Error", err));
+// }
+        </script>
+
+</body>
+</html>
