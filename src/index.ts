@@ -1,6 +1,14 @@
 // Get the container where product cards will be displayed
 let show = document.querySelector('.show') as HTMLDivElement;
 
+let sideBarMoreIcon = document.querySelector(".sidebar-more-icon") as HTMLDivElement;
+
+let searchBar = document.querySelector('input') as HTMLInputElement ;
+
+let closeMoreIcon = document.getElementById('closeIcon') as HTMLElement;
+
+let menu = document.querySelector(".menu") as HTMLElement;
+
 let icons = document.querySelector('.icons') as HTMLDivElement;
 let home = document.querySelector('a') as HTMLAnchorElement;
 
@@ -49,6 +57,15 @@ cartShop?.addEventListener('click',()=>{
 closeIcon?.addEventListener('click',()=>{
   sidebar.classList.add('d-none')
 })
+
+// Menu Icon 
+menu.addEventListener('click',()=>{
+  sideBarMoreIcon.classList.remove('d-none')
+})
+closeMoreIcon.addEventListener('click',()=>{
+  sideBarMoreIcon.classList.add('d-none')
+})
+
 // Async function to fetch and display products
 
 home.style.color="black"
@@ -65,9 +82,10 @@ async function getApi() {
     let arr = data.products.filter((e: { title: string }) =>
       e.title !== 'Beef Steak' && e.title !== 'Cucumber'
     );
-const copiedArray = [...arr];
+let copiedArray = [...arr];
     // Iterate over the filtered products
-    copiedArray.forEach((element: any) => {
+function getResult(copiedArray: ArrOfItems[]){
+   copiedArray.forEach((element: any) => {
       // Create individual elements for each product
       let heading = document.createElement('h5');
       let image = document.createElement('img');
@@ -179,6 +197,8 @@ productCard.appendChild(partDetails);
 
   show.appendChild(productCard)
  })
+//Search Bar Input 
+
 
      buyBtn.addEventListener('click',()=>{
           console.log('let us see before',arrOfItems)
@@ -310,6 +330,21 @@ console.log('sum',sum)
      })
     
     });
+}
+   
+if(searchBar.value === '' ){
+getResult(copiedArray);
+
+
+}
+searchBar.addEventListener('change',()=>{
+  if(searchBar.value !== '' && copiedArray.some(el=>el.title === searchBar.value)){
+show.innerHTML = ''
+  getResult(copiedArray.filter(el=>el.title === searchBar.value));
+  }
+  
+
+})
     if(count === 0 ){
       badge.classList.remove('badge')
     }

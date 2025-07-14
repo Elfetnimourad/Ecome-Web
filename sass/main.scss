@@ -123,3 +123,44 @@ border-top: 2px solid black;
     display: flex;
     flex-direction: column;
 }
+a[data-link]{
+    padding: 36px;
+    text-decoration: none;
+    cursor: pointer;
+    color: white;
+}
+a[data-link]:hover{
+background-color: chocolate;
+}
+.menu:hover{
+    opacity: 0.9;
+    border: 1px solid white;
+}
+ .sidebar-more-icon {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      width: 30%;
+      height: 90vh;
+      position: fixed;
+      z-index: 99999999999999999 !important;
+      background-color: black;
+      opacity: 0.9;
+      padding: 20px;
+      gap: 15px;
+      color: white;
+         align-self: start;
+& > a{
+    text-decoration: none;
+    color: white !important;
+}
+    }
+    .d-none{
+        display: none;
+    }
+    .home{
+        color: black;
+    }
+    #closeIcon{
+        align-self: flex-end;
+    }

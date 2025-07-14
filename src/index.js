@@ -17,6 +17,10 @@ function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 // Get the container where product cards will be displayed
 var show = document.querySelector('.show');
+var sideBarMoreIcon = document.querySelector(".sidebar-more-icon");
+var searchBar = document.querySelector('input');
+var closeMoreIcon = document.getElementById('closeIcon');
+var menu = document.querySelector(".menu");
 var icons = document.querySelector('.icons');
 var home = document.querySelector('a');
 var cartShop = document.querySelector('.fa-cart-shopping');
@@ -43,6 +47,15 @@ cartShop === null || cartShop === void 0 || cartShop.addEventListener('click', f
 closeIcon === null || closeIcon === void 0 || closeIcon.addEventListener('click', function () {
   sidebar.classList.add('d-none');
 });
+
+// Menu Icon 
+menu.addEventListener('click', function () {
+  sideBarMoreIcon.classList.remove('d-none');
+});
+closeMoreIcon.addEventListener('click', function () {
+  sideBarMoreIcon.classList.add('d-none');
+});
+
 // Async function to fetch and display products
 
 home.style.color = "black";
@@ -51,18 +64,244 @@ function getApi() {
 } // Call the function to start loading data
 function _getApi() {
   _getApi = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    var res, data, arr, copiedArray;
+    var getResult, res, data, arr, copiedArray;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.prev = 0;
-          _context.next = 3;
+          // Iterate over the filtered products
+          getResult = function getResult(copiedArray) {
+            copiedArray.forEach(function (element) {
+              // Create individual elements for each product
+              var heading = document.createElement('h5');
+              var image = document.createElement('img');
+              var card = document.createElement('div');
+              var price = document.createElement('p');
+              var buyBtn = document.createElement('button');
+
+              // Set content for elements
+              heading.innerHTML = element.title;
+              image.src = element.images[0];
+              price.innerHTML = "Price: ".concat(element.price, "$");
+              buyBtn.innerText = "BUY";
+
+              // Style the image
+              image.style.width = '290px';
+              image.style.height = '220px';
+              image.style.padding = '15px';
+
+              // Style the price
+              price.style.paddingBottom = '5px';
+              price.style.paddingRight = '5px';
+
+              // Style the Buy button
+              buyBtn.style.width = '310px';
+              buyBtn.style.height = '25px';
+              buyBtn.style.backgroundColor = '#007BFF';
+              buyBtn.style.color = 'white';
+              buyBtn.style.borderRadius = '7px';
+              buyBtn.style.float = 'center';
+
+              // Style the card
+              card.style.height = '400px';
+              card.style.borderRadius = '10px';
+              card.style.backgroundColor = 'white';
+              card.style.display = 'flex';
+              card.style.flexDirection = 'column';
+              card.style.alignItems = 'center';
+              card.style.justifyContent = 'space-between';
+              card.style.margin = '10px';
+              card.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+              card.style.padding = '10px';
+
+              // Append elements to card
+              card.appendChild(image);
+              card.appendChild(heading);
+              card.appendChild(price);
+              card.appendChild(buyBtn);
+
+              // Append card to the main container
+              show.appendChild(card);
+
+              //Add To Cart
+              badge.classList.add('badge');
+              cartBadge.appendChild(badge);
+              var toot;
+              var objItem = _objectSpread(_objectSpread({}, element), {}, {
+                quantity: quantity,
+                toot: toot
+              });
+
+              // Full Details for the Each Product 
+
+              image.addEventListener('click', function () {
+                show.innerHTML = '';
+                var partImage = document.createElement("div");
+                var partDetails = document.createElement("div");
+                var productCard = document.createElement('div');
+                var productImage = document.createElement('img');
+                var productTitle = document.createElement("h4");
+                var descrptionProduct = document.createElement("p");
+                var productPrice = document.createElement('span');
+                var productDimensions = document.createElement("h5");
+                var productStock = document.createElement("h5");
+                for (var i = 0.1; i <= element.rating; i++) {
+                  var rateProduct = document.createElement("i");
+                  rateProduct.classList = 'fa-solid fa-star';
+                  rateProduct.style.color = "yellow";
+                  partDetails.appendChild(rateProduct);
+                  productCard.appendChild(partDetails);
+                }
+                show.style.height = '80vh';
+                productImage.src = element.images[0];
+                productImage.style.border = '1px solid lightblue';
+                productImage.style.boxShadow = '2px 2px 2px lightblue';
+                productTitle.innerText = 'Title :' + element.title;
+                descrptionProduct.innerText = "Product Description :" + element.description;
+                productPrice.innerText = 'Price :' + element.price + "$";
+                productDimensions.innerHTML = "Dimensions :" + JSON.stringify(element.dimensions);
+                productImage.style.height = '50vh';
+                productStock.innerHTML = "Stock :" + element.stock;
+                partImage.appendChild(productImage);
+                partDetails.appendChild(productTitle);
+                partDetails.appendChild(descrptionProduct);
+                partDetails.appendChild(productDimensions);
+                partDetails.appendChild(productPrice);
+                partDetails.appendChild(productStock);
+                productCard.style.display = 'flex';
+                productCard.style.flexDirection = 'row';
+                productCard.style.width = '150vh';
+                productCard.style.height = '70vh';
+                productCard.appendChild(partImage);
+                productCard.appendChild(partDetails);
+                show.appendChild(productCard);
+              });
+              //Search Bar Input 
+
+              buyBtn.addEventListener('click', function () {
+                console.log('let us see before', arrOfItems);
+                console.log(quantity.quantity++, 'rr');
+                badge.classList.add('badge');
+                count++;
+                console.log(count);
+                badge.innerHTML = count.toString();
+                cartBadge.style.transform = 'translateY(10%)';
+                objItem.quantity++;
+                objItem.toot = objItem.quantity * objItem.price || objItem.price;
+                arrOfItems.push(objItem);
+                arrOfItemsList.innerHTML = "";
+                var arrOfSetItemsFilter = arrOfItems.filter(function (e, i) {
+                  return i === arrOfItems.indexOf(e);
+                });
+                console.log('filtred array', arrOfSetItemsFilter);
+                var arrOfSetItems = new Set([].concat(arrOfItems));
+                var ar = [];
+                arrOfSetItems.forEach(function (ele, index) {
+                  if (ele.quantity !== 0) {
+                    var cardItem = document.createElement('div');
+                    var imgItem = document.createElement('img');
+                    var titleItem = document.createElement("p");
+                    var amount = document.createElement("span");
+                    var decBtn = document.createElement("button");
+                    var incBtn = document.createElement("button");
+                    incBtn.addEventListener("click", function () {
+                      ele.quantity++;
+                      amount.innerHTML = "Amount :" + ele.quantity;
+                      ele.toot = ele.quantity * ele.price;
+                      ar.push(totNumber);
+                      count++;
+                      badge.innerHTML = count.toString();
+                      console.log('ar', ar);
+                      amount.appendChild(incBtn);
+                      amount.appendChild(decBtn);
+                      console.log("ele of increment cart shop", ele);
+                      var sum = _toConsumableArray(arrOfSetItems.values()).map(function (e) {
+                        return e.toot;
+                      }).reduce(function (e, c) {
+                        return e + c;
+                      });
+                      totPrice.innerHTML = 'Total Price :' + sum.toString() + "$";
+                    });
+                    decBtn.addEventListener("click", function () {
+                      ele.quantity--;
+                      amount.innerHTML = "Amount :" + ele.quantity;
+                      ele.toot = ele.quantity * ele.price;
+                      ar.push(totNumber);
+                      console.log('ar', ar);
+                      count--;
+                      badge.innerHTML = count.toString();
+                      amount.appendChild(incBtn);
+                      amount.appendChild(decBtn);
+                      console.log("ele of decrement cart shop", ele);
+                      var sum = _toConsumableArray(arrOfSetItems.values()).map(function (e) {
+                        return e.toot;
+                      }).reduce(function (e, c) {
+                        return e + c;
+                      });
+                      totPrice.innerHTML = 'Total Price :' + sum.toString() + "$";
+                      if (count === 0) {
+                        badge.classList.remove('badge');
+                        totPrice.remove();
+                      }
+                      if (ele.quantity === 0) {
+                        cardItem.remove();
+                        arrOfSetItems.delete(ele);
+                      }
+                    });
+                    if (ele.quantity === 0) {
+                      cardItem.remove();
+                      arrOfSetItems.delete(ele);
+                    }
+                    console.log("eleeeeeeee", ele);
+                    incBtn.innerHTML = '+';
+                    decBtn.innerHTML = '-';
+
+                    // let totalPrice = arrOfItems.reduce((e,c)=>e.price + c.price);
+
+                    cardItem.style.width = '100%';
+                    imgItem.style.height = '80px';
+                    imgItem.style.width = '80px';
+                    imgItem.src = ele.images[0];
+                    titleItem.innerHTML = ele.title;
+                    console.log('ele', ele);
+                    if (!tryArr.has(ele)) {
+                      ele.quantity = 1;
+                      tryArr.add(ele);
+                    }
+                    amount.innerHTML = "Amount :" + ele.quantity;
+                    console.log('true, it is the same');
+                    var totNumber = ele.quantity * ele.price;
+                    console.log("totNumber", totNumber);
+                    ar.push(totNumber);
+                    console.log(ar, "ar");
+                    amount.appendChild(incBtn);
+                    amount.appendChild(decBtn);
+                    cardItem.appendChild(imgItem);
+                    cardItem.appendChild(titleItem);
+                    cardItem.appendChild(amount);
+                    arrOfItemsList.appendChild(cardItem);
+                    console.log(ele.toot);
+                  }
+                });
+                var sum = _toConsumableArray(arrOfSetItems.values()).map(function (e) {
+                  return e.toot;
+                }).reduce(function (e, c) {
+                  return e + c;
+                });
+                totPrice.innerHTML = 'Total Price :' + sum.toString() + "$";
+                arrOfItemsList.appendChild(totPrice);
+                console.log('sum', sum);
+                arrOfItemsList.style.overflow = "scroll";
+              });
+            });
+          };
+          _context.next = 4;
           return fetch("https://dummyjson.com/products");
-        case 3:
+        case 4:
           res = _context.sent;
-          _context.next = 6;
+          _context.next = 7;
           return res.json();
-        case 6:
+        case 7:
           data = _context.sent;
           // Log full data to the console
           console.log(data);
@@ -71,242 +310,34 @@ function _getApi() {
           arr = data.products.filter(function (e) {
             return e.title !== 'Beef Steak' && e.title !== 'Cucumber';
           });
-          copiedArray = _toConsumableArray(arr); // Iterate over the filtered products
-          copiedArray.forEach(function (element) {
-            // Create individual elements for each product
-            var heading = document.createElement('h5');
-            var image = document.createElement('img');
-            var card = document.createElement('div');
-            var price = document.createElement('p');
-            var buyBtn = document.createElement('button');
-
-            // Set content for elements
-            heading.innerHTML = element.title;
-            image.src = element.images[0];
-            price.innerHTML = "Price: ".concat(element.price, "$");
-            buyBtn.innerText = "BUY";
-
-            // Style the image
-            image.style.width = '290px';
-            image.style.height = '220px';
-            image.style.padding = '15px';
-
-            // Style the price
-            price.style.paddingBottom = '5px';
-            price.style.paddingRight = '5px';
-
-            // Style the Buy button
-            buyBtn.style.width = '310px';
-            buyBtn.style.height = '25px';
-            buyBtn.style.backgroundColor = '#007BFF';
-            buyBtn.style.color = 'white';
-            buyBtn.style.borderRadius = '7px';
-            buyBtn.style.float = 'center';
-
-            // Style the card
-            card.style.height = '400px';
-            card.style.borderRadius = '10px';
-            card.style.backgroundColor = 'white';
-            card.style.display = 'flex';
-            card.style.flexDirection = 'column';
-            card.style.alignItems = 'center';
-            card.style.justifyContent = 'space-between';
-            card.style.margin = '10px';
-            card.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
-            card.style.padding = '10px';
-
-            // Append elements to card
-            card.appendChild(image);
-            card.appendChild(heading);
-            card.appendChild(price);
-            card.appendChild(buyBtn);
-
-            // Append card to the main container
-            show.appendChild(card);
-
-            //Add To Cart
-            badge.classList.add('badge');
-            cartBadge.appendChild(badge);
-            var toot;
-            var objItem = _objectSpread(_objectSpread({}, element), {}, {
-              quantity: quantity,
-              toot: toot
-            });
-
-            // Full Details for the Each Product 
-
-            image.addEventListener('click', function () {
+          copiedArray = _toConsumableArray(arr);
+          if (searchBar.value === '') {
+            getResult(copiedArray);
+          }
+          searchBar.addEventListener('change', function () {
+            if (searchBar.value !== '' && copiedArray.some(function (el) {
+              return el.title === searchBar.value;
+            })) {
               show.innerHTML = '';
-              var partImage = document.createElement("div");
-              var partDetails = document.createElement("div");
-              var productCard = document.createElement('div');
-              var productImage = document.createElement('img');
-              var productTitle = document.createElement("h4");
-              var descrptionProduct = document.createElement("p");
-              var productPrice = document.createElement('span');
-              var productDimensions = document.createElement("h5");
-              var productStock = document.createElement("h5");
-              for (var i = 0.1; i <= element.rating; i++) {
-                var rateProduct = document.createElement("i");
-                rateProduct.classList = 'fa-solid fa-star';
-                rateProduct.style.color = "yellow";
-                partDetails.appendChild(rateProduct);
-                productCard.appendChild(partDetails);
-              }
-              show.style.height = '80vh';
-              productImage.src = element.images[0];
-              productImage.style.border = '1px solid lightblue';
-              productImage.style.boxShadow = '2px 2px 2px lightblue';
-              productTitle.innerText = 'Title :' + element.title;
-              descrptionProduct.innerText = "Product Description :" + element.description;
-              productPrice.innerText = 'Price :' + element.price + "$";
-              productDimensions.innerHTML = "Dimensions :" + JSON.stringify(element.dimensions);
-              productImage.style.height = '50vh';
-              productStock.innerHTML = "Stock :" + element.stock;
-              partImage.appendChild(productImage);
-              partDetails.appendChild(productTitle);
-              partDetails.appendChild(descrptionProduct);
-              partDetails.appendChild(productDimensions);
-              partDetails.appendChild(productPrice);
-              partDetails.appendChild(productStock);
-              productCard.style.display = 'flex';
-              productCard.style.flexDirection = 'row';
-              productCard.style.width = '150vh';
-              productCard.style.height = '70vh';
-              productCard.appendChild(partImage);
-              productCard.appendChild(partDetails);
-              show.appendChild(productCard);
-            });
-            buyBtn.addEventListener('click', function () {
-              console.log('let us see before', arrOfItems);
-              console.log(quantity.quantity++, 'rr');
-              badge.classList.add('badge');
-              count++;
-              console.log(count);
-              badge.innerHTML = count.toString();
-              cartBadge.style.transform = 'translateY(10%)';
-              objItem.quantity++;
-              objItem.toot = objItem.quantity * objItem.price || objItem.price;
-              arrOfItems.push(objItem);
-              arrOfItemsList.innerHTML = "";
-              var arrOfSetItemsFilter = arrOfItems.filter(function (e, i) {
-                return i === arrOfItems.indexOf(e);
-              });
-              console.log('filtred array', arrOfSetItemsFilter);
-              var arrOfSetItems = new Set([].concat(arrOfItems));
-              var ar = [];
-              arrOfSetItems.forEach(function (ele, index) {
-                if (ele.quantity !== 0) {
-                  var cardItem = document.createElement('div');
-                  var imgItem = document.createElement('img');
-                  var titleItem = document.createElement("p");
-                  var amount = document.createElement("span");
-                  var decBtn = document.createElement("button");
-                  var incBtn = document.createElement("button");
-                  incBtn.addEventListener("click", function () {
-                    ele.quantity++;
-                    amount.innerHTML = "Amount :" + ele.quantity;
-                    ele.toot = ele.quantity * ele.price;
-                    ar.push(totNumber);
-                    count++;
-                    badge.innerHTML = count.toString();
-                    console.log('ar', ar);
-                    amount.appendChild(incBtn);
-                    amount.appendChild(decBtn);
-                    console.log("ele of increment cart shop", ele);
-                    var sum = _toConsumableArray(arrOfSetItems.values()).map(function (e) {
-                      return e.toot;
-                    }).reduce(function (e, c) {
-                      return e + c;
-                    });
-                    totPrice.innerHTML = 'Total Price :' + sum.toString() + "$";
-                  });
-                  decBtn.addEventListener("click", function () {
-                    ele.quantity--;
-                    amount.innerHTML = "Amount :" + ele.quantity;
-                    ele.toot = ele.quantity * ele.price;
-                    ar.push(totNumber);
-                    console.log('ar', ar);
-                    count--;
-                    badge.innerHTML = count.toString();
-                    amount.appendChild(incBtn);
-                    amount.appendChild(decBtn);
-                    console.log("ele of decrement cart shop", ele);
-                    var sum = _toConsumableArray(arrOfSetItems.values()).map(function (e) {
-                      return e.toot;
-                    }).reduce(function (e, c) {
-                      return e + c;
-                    });
-                    totPrice.innerHTML = 'Total Price :' + sum.toString() + "$";
-                    if (count === 0) {
-                      badge.classList.remove('badge');
-                      totPrice.remove();
-                    }
-                    if (ele.quantity === 0) {
-                      cardItem.remove();
-                      arrOfSetItems.delete(ele);
-                    }
-                  });
-                  if (ele.quantity === 0) {
-                    cardItem.remove();
-                    arrOfSetItems.delete(ele);
-                  }
-                  console.log("eleeeeeeee", ele);
-                  incBtn.innerHTML = '+';
-                  decBtn.innerHTML = '-';
-
-                  // let totalPrice = arrOfItems.reduce((e,c)=>e.price + c.price);
-
-                  cardItem.style.width = '100%';
-                  imgItem.style.height = '80px';
-                  imgItem.style.width = '80px';
-                  imgItem.src = ele.images[0];
-                  titleItem.innerHTML = ele.title;
-                  console.log('ele', ele);
-                  if (!tryArr.has(ele)) {
-                    ele.quantity = 1;
-                    tryArr.add(ele);
-                  }
-                  amount.innerHTML = "Amount :" + ele.quantity;
-                  console.log('true, it is the same');
-                  var totNumber = ele.quantity * ele.price;
-                  console.log("totNumber", totNumber);
-                  ar.push(totNumber);
-                  console.log(ar, "ar");
-                  amount.appendChild(incBtn);
-                  amount.appendChild(decBtn);
-                  cardItem.appendChild(imgItem);
-                  cardItem.appendChild(titleItem);
-                  cardItem.appendChild(amount);
-                  arrOfItemsList.appendChild(cardItem);
-                  console.log(ele.toot);
-                }
-              });
-              var sum = _toConsumableArray(arrOfSetItems.values()).map(function (e) {
-                return e.toot;
-              }).reduce(function (e, c) {
-                return e + c;
-              });
-              totPrice.innerHTML = 'Total Price :' + sum.toString() + "$";
-              arrOfItemsList.appendChild(totPrice);
-              console.log('sum', sum);
-              arrOfItemsList.style.overflow = "scroll";
-            });
+              getResult(copiedArray.filter(function (el) {
+                return el.title === searchBar.value;
+              }));
+            }
           });
           if (count === 0) {
             badge.classList.remove('badge');
           }
-          _context.next = 17;
+          _context.next = 19;
           break;
-        case 14:
-          _context.prev = 14;
+        case 16:
+          _context.prev = 16;
           _context.t0 = _context["catch"](0);
           console.error("Error fetching products:", _context.t0);
-        case 17:
+        case 19:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 14]]);
+    }, _callee, null, [[0, 16]]);
   }));
   return _getApi.apply(this, arguments);
 }
