@@ -1,0 +1,58 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <style>
+        *{
+            box-sizing: border-box;
+            margin:10px;
+        }
+        h2,p{
+                        text-align: center;
+
+        }
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .sign-up-card{
+width: 400px;
+height: 500px;
+border-radius: 7px;
+background-color: #eee;
+        }
+        input{
+            width: 90%;
+            height: 35px;
+            border-radius:10px;
+        }
+        button{
+            width: 90%;
+            height: 35px;
+            border-radius: 8px;
+            background-color: #0171d3;
+            color:white;
+        }
+    </style>
+
+
+</head>
+<body>
+    <form class="sign-up-card">
+        <h2>Sign Up</h2>
+
+        <input type="email" placeholder="Email" name="email" required>
+        <input type="password" placeholder="Password" name="Password" required>
+        <input type="password" placeholder="Confirm Password" name="Confirm Password" required>
+
+        <button>Sign Up</button>
+        <p>Already Have An Account,<a href="./login.html">Login</a> </p>
+        <br>
+        <p>Or</p>
+    </form>
+    <script src="login.js"></script>
+</body>
+</html>
