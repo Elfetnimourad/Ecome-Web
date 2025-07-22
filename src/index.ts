@@ -1,3 +1,4 @@
+
 // Get the container where product cards will be displayed
 let show = document.querySelector('.show') as HTMLDivElement;
 
@@ -27,10 +28,12 @@ let arrOfItemsList = document.querySelector(".arr-of-items") as HTMLDivElement;
 let sidebar = document.querySelector('.sidebar') as HTMLDivElement;
 
       let totPrice = document.createElement("span") as HTMLSpanElement;
+
+      let logout = document.querySelector('.logout') as HTMLAnchorElement;
 totPrice.classList.add("totPrice");
 
 let count:number = 0;
-        let countedItem = 1;
+        let countedItem:number = 1;
                 let quantity = {quantity:0};
                 let t = 0;
 
@@ -57,7 +60,6 @@ cartShop?.addEventListener('click',()=>{
 closeIcon?.addEventListener('click',()=>{
   sidebar.classList.add('d-none')
 })
-
 // Menu Icon 
 menu.addEventListener('click',()=>{
   sideBarMoreIcon.classList.remove('d-none')
@@ -356,3 +358,4 @@ show.innerHTML = ''
 
 // Call the function to start loading data
 getApi();
+

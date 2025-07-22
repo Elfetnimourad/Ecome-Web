@@ -25,7 +25,7 @@
 
       <a href="../pages/about.html"  data-link>About</a>
       <a href="../pages/FAQs.html"  data-link>FAQs</a>
-      <a href="../pages/logout.html"  data-link>Logout</a>
+      <a href="../pages/login.html" class='logout' data-link>Logout</a>
 
   
       <a href="../pages/Contact.html"  data-link>Contact Us</a>
@@ -55,8 +55,10 @@
 <i class="fa-solid fa-cart-shopping "></i>
 
 </div>
-
+<div class="img-style">
 <img src="../images.jpg" alt="avatar" class="avatar">
+</div>
+
  <i class="material-icons menu">menu</i>
 
 </div>
@@ -65,6 +67,92 @@
 <div class="show">
 
 </div>
-    <script src="index.js"></script>
+    <script src="index.js" >
+
+ 
+    </script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getAuth,
+  signOut,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCnfkf0iVLeet3UhDjqIesMyJhq8rtwdoM",
+  authDomain: "e-commerce--web.firebaseapp.com",
+  projectId: "e-commerce--web",
+  storageBucket: "e-commerce--web.firebasestorage.app",
+  messagingSenderId: "58938285035",
+  appId: "1:58938285035:web:2e7ebf4c4215e926eed7ae",
+};
+
+// Initialize Firebase
+initializeApp(firebaseConfig);
+
+const auth = getAuth();
+const provider = new GoogleAuthProvider();
+const logout = document.querySelector('.logout')
+logout.addEventListener('click',()=>{
+  signOut(auth).then(()=>console.log('Sign Out')).catch(err=>console.log(err))
+})
+// .onclick = function () {
+//   signOut(auth).then(() => {
+//     console.log("Sign Out");
+//   });
+// };
+
+const user = auth.currentUser;
+console.log('user',auth)
+function updateProfile(user) {
+  if (user) {
+      console.log('hhhhh')
+
+    // The user object has basic properties such as display name, email, etc.
+    const displayName = user.displayName;
+    const email = user.email;
+    const photoURL = user.photoURL;
+    const emailVerified = user.emailVerified;
+
+   const avatar =  document.querySelector(".avatar");
+   const imgStyle = document.querySelector(".img-style");
+   if(email && photoURL && avatar){
+    avatar.src = photoURL;
+   }
+
+   if(email && !photoURL){
+    avatar.remove();
+
+      imgStyle.innerText = email[0].toUpperCase();
+
+   }
+            // avatar.src = email[0].toUpperCase();
+
+      console.log(email[0])
+   
+    // The user's ID, unique to the Firebase project. Do NOT use
+    // this value to authenticate with your backend server, if
+    // you have one. Use User.getToken() instead.
+  }
+}
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log('auth changed')
+    updateProfile(user);
+    const uid = user.uid;
+    console.log(uid)
+    return uid;
+  } else {
+    alert("created Account & login");
+    //  window.location.href = 'index.html'
+  }
+});
+
+    </script>
 </body>
 </html>

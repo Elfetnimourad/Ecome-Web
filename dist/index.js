@@ -24,6 +24,7 @@ const badge = document.createElement('div');
 let arrOfItemsList = document.querySelector(".arr-of-items");
 let sidebar = document.querySelector('.sidebar');
 let totPrice = document.createElement("span");
+let logout = document.querySelector('.logout');
 totPrice.classList.add("totPrice");
 let count = 0;
 let countedItem = 1;

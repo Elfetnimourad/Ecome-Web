@@ -21,7 +21,7 @@
             background-color: #eee;
 
         }
-        .sign-up-card{
+        .login-card{
 width: 400px;
 height: 500px;
 border-radius: 7px;
@@ -29,8 +29,8 @@ background-color: #ffffff;
         }
         input{
             width: 90%;
-            height: 35px;
-            border-radius:10px;
+           height: 40px;
+            border-radius:7px;
             
         }
         button{
@@ -43,6 +43,8 @@ background-color: #ffffff;
         img{
 height: 35px;
 width: 30px;
+border-radius: 50%;
+
         }
         .google-login{
             display: flex;
@@ -51,31 +53,41 @@ width: 30px;
             width: 90%;
             border: 1px solid #eee;
             border-radius: 10px;
+            cursor:pointer;
+        }
+        .google-login:hover{
+          background-color: orange;
+          transition: ease 0.3;
+          color: white;
         }
         .google-login p{
             line-height: 190%;
             text-align: center;
             flex: 1;
         }
+          h2{
+            margin-bottom: 30px;
+        }
     </style>
 
 
 </head>
 <body>
-    <form class="sign-up-card">
+    <form class="login-card">
         <h2>Login </h2>
 
         <input type="email" placeholder="Email" name="email" required>
-        <input type="password" placeholder="Password" name="Password" required>
+        <input type="password" placeholder="Password" name="password" required>
 
-        <button>Login</button>
+        <button type="submit">Login</button>
         <p>Already Have An Account,<a href="./signUp.html">Sign Up</a> </p>
         <br>
         <p>Or</p>
         <div class="google-login">
-<img src="../Capture-google.PNG" alt="">
+<img src="../Capture-google-2.PNG" alt="">
             <p>Login With Google</p>
         </div>
     </form>
+    <script src="logic.js" type="module"></script>
 </body>
 </html>
