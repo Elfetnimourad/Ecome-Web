@@ -75,24 +75,24 @@ input:hover, textarea:hover{
 </script>
 </head>
 <body>
-        <form action="">
+        <form action="" class="form-contact">
             <h1>Contact Us</h1>
             <p>Have questions or suggestions? We'd love to hear from you!</p>
             <label for=""></label>
-            <input type="text" placeholder="username" id="name" required >
+            <input type="text" placeholder="username" id="name"  name="username" required >
             <br>
             <label for=""></label>
-            <input type="email" placeholder="email adrress" id="email" required >
+            <input type="email" placeholder="email adrress" id="email" name="email" required >
             <br>
             <label for=""></label>
-            <input type="text" placeholder="subject" id="subject" required >
+            <input type="text" placeholder="subject" id="subject" name="subject" required >
             <br>
             <label for=""></label>
-    <textarea name="your message" placeholder="your message" id="message"></textarea>
+    <textarea name="your message" placeholder="your message" id="message" name="message"></textarea>
             <br>
-            <button type="button" class="btn-style" onclick="sendEmail()">Submit</button>
+            <button type="submit" class="btn-style">Submit</button>
         </form>
-        <script>
+        <script src='logic.js' type="module">
 
 //             function sendEmail() {
 //   console.log("hi from sendEmail function");

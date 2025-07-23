@@ -1,5 +1,10 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
+  getFirestore,
+  collection,
+  addDoc,
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {
   getAuth,
   signOut,
   signInWithEmailAndPassword,
@@ -7,6 +12,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   onAuthStateChanged,
+  updateProfile,
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -24,11 +30,11 @@ initializeApp(firebaseConfig);
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
 
-// .onclick = function () {
-//   signOut(auth).then(() => {
-//     console.log("Sign Out");
-//   });
-// };
+//init services
+const db = getFirestore();
+//get Collection
+const colDoc = collection(db, "messages");
+
 const loginForm = document.querySelector(".login-card");
 loginForm?.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -36,9 +42,11 @@ loginForm?.addEventListener("submit", (e) => {
   const email = loginForm?.email.value;
   const password = loginForm?.password.value;
   signInWithEmailAndPassword(auth, email, password).then((cred) => {
-    alert(`Welcome To Our Store`);
+    console.log(cred.user.displayName);
+
     window.location.href = "../dist/index.html";
     console.log("User Created:", cred.user);
+    alert(`Hi ${cred.user.displayName},Welcome To Our Store`);
   });
 });
 
@@ -46,11 +54,18 @@ loginForm?.addEventListener("submit", (e) => {
 const signupForm = document.querySelector(".sign-up-card");
 signupForm?.addEventListener("submit", (e) => {
   e.preventDefault();
+  const displayName = signupForm.username.value;
   const email = signupForm.email.value;
   const password = signupForm.password.value;
   createUserWithEmailAndPassword(auth, email, password)
     .then((cred) => {
       console.log("Created User:", cred.user);
+      window.location.href = "login.html";
+
+      const user = cred.user;
+      return updateProfile(user, {
+        displayName: displayName,
+      });
     })
     .catch((err) => console.log(err.message));
 });
@@ -80,7 +95,7 @@ googleSignUp?.addEventListener("click", () => {
     });
 });
 const user = auth.currentUser;
-function updateProfile(user) {
+function updatedProfile(user) {
   if (user !== null) {
     // The user object has basic properties such as display name, email, etc.
     const displayName = user.displayName;
@@ -97,11 +112,25 @@ function updateProfile(user) {
 }
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    updateProfile(user);
+    updatedProfile(user);
     const uid = user.uid;
     return uid;
   } else {
     alert("created Account & login");
     // window.location.href = ''
   }
+});
+
+// contact logic part
+const contactForm = document.querySelector(".form-contact");
+contactForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  addDoc(colDoc, {
+    email: contactForm.email.value,
+    username: contactForm.username.value,
+    subject: contactForm.subject.value,
+    message: contactForm.message.value,
+  }).then(() => {
+    contactForm.reset();
+  });
 });

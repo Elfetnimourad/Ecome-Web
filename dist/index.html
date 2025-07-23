@@ -125,15 +125,14 @@ function updateProfile(user) {
     avatar.src = photoURL;
    }
 
-   if(email && !photoURL){
+   if(email && !photoURL && displayName){
     avatar.remove();
-
-      imgStyle.innerText = email[0].toUpperCase();
+console.log('displayName',displayName)
+      imgStyle.innerText = displayName[0].toUpperCase();
 
    }
             // avatar.src = email[0].toUpperCase();
 
-      console.log(email[0])
    
     // The user's ID, unique to the Firebase project. Do NOT use
     // this value to authenticate with your backend server, if
