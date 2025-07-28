@@ -10,7 +10,7 @@
     display: flex;
     flex-direction: row;
       align-items: center;
-      justify-content: space-around;
+      justify-content: space-between;
 
 }
 h1{
@@ -30,15 +30,22 @@ input{
     width: 400px;
     height: 30px;
     outline: none;
-    transform: translateX(70%)
+    // transform: translateX(70%)
 }
 }
 .icons{
-    @extend %ms-auto;
+
 @extend %flex-row;
 justify-content: space-evenly;
 width: 30%;
 height: 50px;
+align-self:center;
+justify-items: flex-end;
+
+}
+.search{
+    align-self:center;
+    justify-items: center;
 
 
 }
@@ -174,5 +181,87 @@ background-color: chocolate;
     background-color: #a3a3a3;
     text-align: center;
     font-size: 25px;
-    color:white;
+    color:rgb(233, 221, 221);
+}
+.add-circle-icon {
+  font-size: 28px;
+  color: orangered;
+  cursor: pointer;
+  margin-right: 12px;
+}
+
+.icons-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1000;
+}
+
+.icons-bar {
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 8px;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    height: 239px;
+    width: 81px;}
+
+.icons-column {
+  flex-direction: column !important;
+  gap: 8px;
+}
+
+
+
+$tablet:"max-width:1020px";
+$mobile:"max-width:755px";
+@media ($tablet) {
+    .show{
+    display: grid;
+    grid-template-columns:32% 32% 32%;
+background: linear-gradient(to right, #4f46e5, #3b82f6);
+    gap:15px 15px;
+}
+}
+@media ($mobile) {
+    *{
+        box-sizing: border-box;
+    }
+    
+    .sidebar {
+        align-self: anchor-center;
+        justify-self: anchor-center;
+        width: 55%;
+        transform: translate(0%, 20%);
+    }    
+    .sidebar-more-icon{
+         align-self: anchor-center;
+        justify-self: anchor-center;
+        width: 55%;
+        transform: translate(0%, 20%);
+        & a{
+            height: 20px;
+        }
+    }
+.header {
+  & h1{
+font-size: 13px;
+   } 
+   & input{
+    width: 210px;
+   }
+}
+    .show{
+    display: grid;
+    grid-template-columns:48% 48%;
+background: linear-gradient(to right, #4f46e5, #3b82f6);
+    gap:7px 7px;
+    & img{
+        width: 187px !important;
+    }
+}
 }

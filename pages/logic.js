@@ -116,21 +116,7 @@ onAuthStateChanged(auth, (user) => {
     const uid = user.uid;
     return uid;
   } else {
-    alert("created Account & login");
+    alert("You are Log Out");
     // window.location.href = ''
   }
-});
-
-// contact logic part
-const contactForm = document.querySelector(".form-contact");
-contactForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  addDoc(colDoc, {
-    email: contactForm.email.value,
-    username: contactForm.username.value,
-    subject: contactForm.subject.value,
-    message: contactForm.message.value,
-  }).then(() => {
-    contactForm.reset();
-  });
 });

@@ -1,6 +1,8 @@
 
 // Get the container where product cards will be displayed
 let show = document.querySelector('.show') as HTMLDivElement;
+let header = document.querySelector('.header') as HTMLDivElement;
+
 
 let sideBarMoreIcon = document.querySelector(".sidebar-more-icon") as HTMLDivElement;
 
@@ -84,6 +86,40 @@ async function getApi() {
     let arr = data.products.filter((e: { title: string }) =>
       e.title !== 'Beef Steak' && e.title !== 'Cucumber'
     );
+   if (window.innerWidth < 800) {
+  let iconsPart = document.createElement('div');
+  iconsPart.className = 'icons-wrapper';
+
+  let addCircle = document.createElement('i');
+  addCircle.className = 'fa-solid fa-circle-plus add-circle-icon';
+icons.remove()
+  iconsPart.appendChild(addCircle);
+  header.appendChild(iconsPart);
+
+  let isExpanded = true;
+
+  addCircle.addEventListener('click', () => {
+    isExpanded = !isExpanded;
+
+    if (isExpanded) {
+      let iconsBar = document.createElement('div');
+      iconsBar.className = 'icons-bar';
+
+      icons.classList.add('icons-column');
+      iconsBar.appendChild(icons);
+      iconsPart.appendChild(iconsBar);
+      header.style.height = '90px';
+    } else {
+      const existingBar = iconsPart.querySelector('.icons-bar');
+      if (existingBar) {
+        iconsPart.removeChild(existingBar);
+        icons.classList.remove('icons-column');
+        header.style.height = '';
+      }
+    }
+  });
+}
+
 let copiedArray = [...arr];
     // Iterate over the filtered products
 function getResult(copiedArray: ArrOfItems[]){
@@ -111,12 +147,12 @@ function getResult(copiedArray: ArrOfItems[]){
       price.style.paddingRight = '5px';
 
       // Style the Buy button
-      buyBtn.style.width = '310px';
+      buyBtn.style.width = '99%';
       buyBtn.style.height = '25px';
       buyBtn.style.backgroundColor = '#007BFF';
       buyBtn.style.color = 'white';
       buyBtn.style.borderRadius = '7px';
-      buyBtn.style.float = 'center'
+      buyBtn.style.alignSelf = 'center';
 
       // Style the card
       card.style.height = '400px';
