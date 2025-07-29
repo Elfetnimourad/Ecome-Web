@@ -3,7 +3,7 @@
   padding: 7px;
 }
 
-.icons, .header {
+.sidebar-header, .icons, .header {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -106,15 +106,7 @@ button {
   color: rgb(25, 127, 145) !important;
 }
 
-.d-none {
-  display: none;
-}
-
 .sidebar-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
   width: 100%;
 }
 
@@ -234,6 +226,16 @@ a[data-link]:hover {
 @media (max-width:755px) {
   * {
     box-sizing: border-box;
+    word-wrap: break-word;
+  }
+  .show {
+    flex-direction: column !important;
+  }
+  .show .productImage {
+    width: 127px !important;
+  }
+  .show .partDetails {
+    width: 200px !important;
   }
   .sidebar {
     align-self: anchor-center;

@@ -3,9 +3,6 @@
     padding:7px;
 }
 
-%ms-auto{
-    margin-left: auto;
-}
 %flex-row{
     display: flex;
     flex-direction: row;
@@ -30,11 +27,9 @@ input{
     width: 400px;
     height: 30px;
     outline: none;
-    // transform: translateX(70%)
 }
 }
 .icons{
-
 @extend %flex-row;
 justify-content: space-evenly;
 width: 30%;
@@ -97,7 +92,6 @@ width: 30%;
     float: right;
 }
 
-    //    transform: translateY(46%);
     }
  
  .sidebar i{
@@ -108,15 +102,8 @@ width: 30%;
     .fa-bag-shopping {
 color:rgb(25, 127, 145) !important;
     }
-     .d-none{
-        display: none;
-    }
-
 .sidebar-header{
-display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
+@extend %flex-row;
       width: 100%;
 }
 hr{
@@ -214,7 +201,12 @@ background-color: chocolate;
   flex-direction: column !important;
   gap: 8px;
 }
-
+%sidebar-sm{
+     align-self: "anchor-center";
+        justify-self: "anchor-center";
+        width: 55%;
+        transform: translate(0%, 20%);
+}
 
 
 $tablet:"max-width:1020px";
@@ -230,19 +222,25 @@ background: linear-gradient(to right, #4f46e5, #3b82f6);
 @media ($mobile) {
     *{
         box-sizing: border-box;
+                word-wrap: break-word;
+
     }
-    
+
+    .show{
+        flex-direction:column !important;
+    }
+    .show .productImage{
+        width: 127px !important;
+    }
+    .show .partDetails{
+        width: 200px !important;
+    }
     .sidebar {
-        align-self: anchor-center;
-        justify-self: anchor-center;
-        width: 55%;
-        transform: translate(0%, 20%);
+       @extend %sidebar-sm;
     }    
     .sidebar-more-icon{
-         align-self: anchor-center;
-        justify-self: anchor-center;
-        width: 55%;
-        transform: translate(0%, 20%);
+              @extend %sidebar-sm;
+
         & a{
             height: 20px;
         }
