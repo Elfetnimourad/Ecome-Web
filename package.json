@@ -1,5 +1,5 @@
 {
-  "homepage":"https://Elfetnimourad.github.io/Ecome-Web",
+  "homepage": "https://Elfetnimourad.github.io/Ecome-Web",
   "name": "Ecomweb",
   "version": "1.0.0",
   "description": "",
@@ -7,9 +7,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "webpack tsc --watch",
-    "build":"tsc",
-    "predeploy":"npm run build",
-    "deploy":"gh-pages -d dist"
+    "build": "tsc",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [],
   "author": "",
