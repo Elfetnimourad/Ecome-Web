@@ -5,9 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "tsc": "webpack tsc --watch",
-    "build": "tsc",
+    
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
